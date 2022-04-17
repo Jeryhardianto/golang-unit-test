@@ -2,9 +2,11 @@ package helper
 
 import (
 	"fmt"
+	"runtime"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // //* Fail()
@@ -48,8 +50,43 @@ import (
 // }
 
 // * Test Assertion with Testify
+
+// * With Assert
 func TestHelloWorldAssert(t *testing.T) {
 	result := HelloWorld("jery")
 	assert.Equal(t, "Hello, jery", result, "Result must be 'Hello, jery'")
 	fmt.Println("TestHelloWorldAssert Done")
 }
+
+//* With Require
+func TestHelloWorldRequire(t *testing.T) {
+	result := HelloWorld("jery")
+	require.Equal(t, "Hello, jery", result, "Result must be 'Hello, jery'")
+	fmt.Println("TestHelloWorldAssert Done")
+}
+
+//  * Skip Test
+func TestSkip(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("Can not run on windows")
+	}
+
+	result := HelloWorld("jery")
+	require.Equal(t, "Hello, jery", result, "Result must be 'Hello, jery'")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
