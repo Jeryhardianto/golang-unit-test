@@ -104,3 +104,72 @@ go get github.com/stretchr/testify
 3. Untuk membatalkan unit test kita bisa menggunakan function Skip()
 ```
 
+## Before dan After Test
+```
+1. Biasanya dalam unit test, kadang kita ingin melakukan sesuatu sebelum dan setelah sebuah unit test dieksekusi
+2. Jikalau kode yang kita lakukan sebelum dan setelah selalu sama antar unit test function, maka membuat manual di unit test function nya adalah hal yang membosankan dan terlalu banyak kode duplikat jadinya
+3. Untungnya di Go-Lang terdapat fitur yang bernama testing.M
+4. Fitur ini bernama Main, dimana digunakan untuk mengatur eksekusi unit test, namun hal ini juga bisa kita gunakan untuk melakukan Before dan After di unit test
+```
+## testing.M
+```
+1. Untuk mengatur ekeskusi unit test, kita cukup membuat sebuah function bernama TestMain dengan parameter testing.M
+2. Jika terdapat function TestMain tersebut, maka secara otomatis Go-Lang akan mengeksekusi function ini tiap kali akan menjalankan unit test di sebuah package
+3. Dengan ini kita bisa mengatur Before dan After unit test sesuai dengan yang kita mau
+4. Ingat, function TestMain itu dieksekusi hanya sekali per Go-Lang package, bukan per tiap function unit test
+
+```
+
+## Sub Test
+```
+1. Go-Lang mendukung fitur pembuatan function unit test di dalam function unit test
+2. Fitur ini memang sedikit aneh dan jarang sekali dimiliki di unit test di bahasa pemrograman yang lainnya
+3. Untuk membuat sub test, kita bisa menggunakan function Run()
+```
+
+### Menjalankan Hanya Sub Test
+```
+1. Kita sudah tahu jika ingin menjalankan sebuah unit test function, kita bisa gunakan perintah :
+go test -run TestNamaFunction
+2. Jika kita ingin menjalankan hanya salah satu sub test, kita bisa gunakan perintah :
+go test -run TestNamaFunction/NamaSubTest
+3. Atau untuk semua test semua sub test di semua function, kita bisa gunakan perintah :
+go test -run /NamaSubTest
+
+```
+
+## Table Test
+```
+1. Sebelumnya kita sudah belajar tentang sub test
+2. Jika diperhatikan, sebenarnya dengan sub test, kita bisa membuat test secara dinamis
+3. Dan fitur sub test ini, biasa digunaka oleh programmer Go-Lang untuk membuat test dengan konsep table test
+4. Table test yaitu dimana kita menyediakan data beruba slice yang berisi parameter dan ekspektasi hasil dari unit test
+5. Lalu slice tersebut kita iterasi menggunakan sub test
+```
+
+## Mock
+```
+1. Mock adalah object yang sudah kita program dengan ekspektasi tertentu sehingga ketika dipanggil, dia akan menghasilkan data yang sudah kita program diawal
+2. Mock adalah salah satu teknik dalam unit testing, dimana kita bisa membuat mock object dari suatu object yang memang sulit untuk di testing
+3. Misal kita ingin membuat unit test, namun ternyata ada kode program kita yang harus memanggil API Call ke third party service. Hal ini sangat sulit untuk di test, karena unit testing kita harus selalu memanggil third party service, dan belum tentu response nya sesuai dengan apa yang kita mau
+4. Pada kasus seperti ini, cocok sekali untuk menggunakan mock object
+
+```
+
+## Testify Mock
+```
+1. Untuk membuat mock object, tidak ada fitur bawaan Go-Lang, namun kita bisa menggunakan library testify yang sebelumnya kita gunakan untuk assertion
+2. Testify mendukung pembuatan mock object, sehingga cocok untuk kita gunakan ketika ingin membuat mock object
+3. Namun, perlu diperhatikan, jika desain kode program kita jelek, akan sulit untuk melakukan mocking, jadi pastikan kita melakukan pembuatan desain kode program kita dengan baik
+4. Mari kita buat contoh kasus
+
+```
+
+## Contoh MOCK => Aplikasi Query Ke Database
+```
+1. Kita akan coba contoh kasus dengan membuat contoh aplikasi golang yang melakukan query ke database
+2. Dimana kita akan buat layer Service sebagai business logic, dan layer Repository sebagai jembatan ke database
+3. Agar kode kita mudah untuk di test, disarankan agar membuat kontrak berupa Interface
+
+```
+
