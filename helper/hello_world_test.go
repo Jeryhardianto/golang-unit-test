@@ -119,9 +119,51 @@ func TestHelloWorldTable(t *testing.T) {
 }
 
 
+//* Benchmark Test
+func BenchmarkHelloWorld(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		HelloWorld("jery")
+	}
+}
 
 
 
+//* Sub Benchmark
+func BenchmarkSubBenchmark(b *testing.B) {
+	b.Run("jery", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			HelloWorld("jery")
+		}
+	})
+
+	b.Run("eko", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			HelloWorld("eko")
+		}
+	})
+}
+
+//* Benchmark Table 
+func BenchmarkHelloWorldTable(b *testing.B) {
+	benchmark := []struct {
+		name string
+		request   string
+		expected string
+	}{
+		{name: "jery BenchmarkHelloWorldTable", request: "jery", expected: "Hello, jery"},
+		{name: "eko fallthrough", request: "eko", expected: "Hello, eko"},
+		{name: "budi categoryRepository", request: "budi", expected: "Hello, budi"},
+		{name: "tomo defer", request: "tomo", expected: "Hello, tomo"},
+	}
+
+	for _, benchmark := range benchmark {
+		b.Run(benchmark.name, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				HelloWorld(benchmark.request)
+			}
+		})
+	}
+}
 
 
 

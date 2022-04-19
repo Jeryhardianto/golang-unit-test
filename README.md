@@ -173,3 +173,73 @@ go test -run /NamaSubTest
 
 ```
 
+## Benchmark
+```
+1. Selain unit test, Go-Lang testing package juga mendukung melakukan benchmark
+2. Benchmark adalah mekanisme menghitung kecepatan performa kode aplikasi kita
+3. Benchmark di Go-Lang dilakukan dengan cara secara otomatis melakukan iterasi kode yang kita panggil berkali-kali sampai waktu tertentu
+4. Kita tidak perlu menentukan jumlah iterasi dan lamanya, karena itu sudah diatur oleh testing.B bawaan dari testing package
+```
+
+## testing.B
+```
+1. testing.B adalah struct yang digunakan untuk melakukan benchmark.
+2. testing.B mirip dengan testing.T, terdapat function Fail(), FailNow(), Error(), Fatal() dan lain-lain
+3. Yang membedakan, ada beberapa attribute dan function tambahan yang digunakan untuk melakukan benchmark
+4. Salah satunya adalah attribute N, ini digunakan untuk melakukan total iterasi sebuah benchmark
+```
+
+## Cara Kerja Benchmark
+```
+1. Cara kerja benchmark di Go-Lang sangat sederhana
+2. Gimana kita hanya perlu membuat perulangan sejumlah N attribute
+3. Nanti secara otomatis Go-Lang akan melakukan eksekusi sejumlah perulangan yang ditentukan secara otomatis, lalu mendeteksi berapa lama proses tersebut berjalan, dan disimpulkan performa benchmark nya dalam waktu
+
+```
+## Membuat Benchmark
+### Benchmark Function
+```
+1. Mirip seperti unit test, untuk benchmark pun, di Go-Lang sudah ditentukan nama function nya, harus diawali dengan kata Benchmark, misal BenchmarkHelloWorld, BenchmarkXxx
+2. Selain itu, harus memiliki parameter (b \*testing.B)
+3. Dan tidak boleh mengembalikan return value
+4. Untuk nama file benchmark, sama seperti unit test, diakhiri dengan \_test, misal hello_world_test.go
+```
+### Menjalankan Benchmark
+```
+1. Untuk menjalankan seluruh benchmark di module, kita bisa menggunakan perintah sama seperti test, namun ditambahkan parameter bench :
+go test -v -bench=.
+2. Jika kita hanya ingin menjalankan benchmark tanpa unit test, kita bisa gunakan perintah :
+go test -v -run=NotMathUnitTest -bench=.
+3. Kode diatas selain menjalankan benchmark, akan menjalankan unit test juga, jika kita hanya ingin menjalankan benchmark tertentu, kita bisa gunakan perintah :
+go test -v -run=NotMathUnitTest -bench=BenchmarkTest
+4. Jika kita menjalankan benchmark di root module dan ingin semua module dijalankan, kita bisa gunakan perintah :
+go test -v -bench=. ./...
+
+```
+
+## Sub Benchmark
+```
+Sama seperti testing.T, di testing.B juga kita bisa membuat sub benchmark menggunakan function Run()
+
+```
+### Menjalankan Hanya Sub Benchmark
+```
+1. Saat kita menjalankan benchmark function, maka semua sub benchmark akan berjalan
+2. Namun jika kita ingin menjalankan salah satu sub benchmark saja, kita bisa gunakan perintah :
+go test -v -bench=BenchmarkNama/NamaSub
+
+```
+
+## Table Benchmark
+```
+1. Sama seperti di unit test, programmer Go-Lang terbiasa membuat table benchmark juga
+2. Ini digunakan agar kita bisa mudah melakukan performance test dengan kombinasi data berbeda-beda tanpa harus membuat banyak benchmark function
+
+```
+
+
+
+
+
+
+
